@@ -8,10 +8,12 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist"
+import Home from './pages/Home';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' >
+      <Route path='' element={<Home/>}></Route>
       <Route path='/interviewee' element={<Interviewee />}></Route>
       <Route path='/interviewer' element={<Interviewer />}></Route>
     </Route>
