@@ -8,6 +8,8 @@ import { uploadCandidateResume, updateCandidateInfo, resetCandidate } from '../s
 import InstructionScreen from '../components/InstructionScreen';
 import VerifyUserForm from '../components/VerifyUserIForm';
 import { nanoid } from '@reduxjs/toolkit';
+import { Flex, Progress } from 'antd';
+import { green, red } from '@ant-design/colors';
 import {
     fetchQuestions,
     addMessage,
@@ -295,8 +297,9 @@ export default function Interviewee() {
 
                 <header className="bg-white border-b border-gray-200 px-4 sm:px-8 md:px-12 py-3 flex flex-wrap items-center justify-between gap-4">
                     {/* Logo */}
-                    <div className="flex items-center w-24 h-10 sm:h-12">
+                    <div className="flex items-center w-24 h-10 gap-4 sm:h-12">
                         HIREBOT
+                        <Progress steps={6} percent={(currentIndex)/6*100} showInfo={false}/>
                     </div>
 
                     {/* Actions: Uploaded file + Upload button */}

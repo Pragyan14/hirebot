@@ -71,9 +71,9 @@ const qnaSlice = createSlice({
         },
         startQuestionTimer: (state) => {
             const difficulty = state.questions[state.currentIndex]?.difficulty;
-            if (difficulty === "Easy") state.questionTimer = 3;
-            if (difficulty === "Medium") state.questionTimer = 3;
-            if (difficulty === "Hard") state.questionTimer = 3;
+            if (difficulty === "Easy") state.questionTimer = 20;
+            if (difficulty === "Medium") state.questionTimer = 60;
+            if (difficulty === "Hard") state.questionTimer = 120;
             state.isQuestionTimerActive = true;
         },
         tickQuestionTimer: (state) => {
