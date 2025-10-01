@@ -6,7 +6,9 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }))
 app.use(express.json());
@@ -17,8 +19,8 @@ app.use(cookieParser());
 import pdfRoute from "./routes/pdf.route.js";
 import questionRoute from "./routes/question.route.js";
 
-app.use("/api/v1/pdf",pdfRoute);
-app.use("/api/v1/question",questionRoute);
+app.use("/api/v1/pdf", pdfRoute);
+app.use("/api/v1/question", questionRoute);
 
 app.use(errorHandler);
 
