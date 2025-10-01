@@ -61,8 +61,6 @@ const candidateSlice = createSlice({
                 state.isUploading = false;
                 state.userInfo = action.payload;
                 state.isResumeUploaded = true;
-                console.log(action.payload);
-
             })
             .addCase(uploadCandidateResume.rejected, (state, action) => {
                 state.isUploading = false;

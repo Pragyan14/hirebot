@@ -64,22 +64,23 @@ export default function Interviewee() {
         saveAnswer,
         nextQuestion,
         submitScore,
-        addCompletedInterview
+        addCompletedInterview,
+        messages,
     });
 
     const handleSendMessage = async () => {
         if (readTimer > 0 || status !== 'ready' || status === 'finished' || !inputMessage.trim()) return;
-        
+
         const answerText = inputMessage.trim();
         setInputMessage('');
-        await answerHandler(answerText, questions, currentIndex, answers, userInfo);
+        await answerHandler(answerText, questions, currentIndex, answers, userInfo, messages);
     };
 
     const handleAutoSubmit = async () => {
         const answerText = inputMessage?.trim() || "no answer";
         dispatch(addMessage({ id: nanoid(), type: 'bot', content: 'Time is up — answer submitted.' }));
         setInputMessage('');
-        await answerHandler(answerText, questions, currentIndex, answers, userInfo);
+        await answerHandler(answerText, questions, currentIndex, answers, userInfo, messages);
     };
 
     const handleKeyPress = (e) => {
@@ -90,14 +91,18 @@ export default function Interviewee() {
     };
 
     const startQna = async () => {
-        dispatch(addMessage({
-            id: nanoid(),
-            type: 'bot',
-            content: 'Cooking questions for you...'
-        }));
-
         try {
+            // Only fetch questions if they don't exist yet
             if (!questions || questions.length === 0) {
+                // Only show cooking message if messages array is empty
+                if (messages.length === 0) {
+                    dispatch(addMessage({
+                        id: nanoid(),
+                        type: 'bot',
+                        content: 'Cooking questions for you...'
+                    }));
+                }
+
                 const payload = await dispatch(fetchQuestions()).unwrap();
                 if (payload && payload.length > 0) {
                     dispatch(addMessage({
@@ -108,7 +113,11 @@ export default function Interviewee() {
                 }
             }
         } catch (err) {
-            dispatch(addMessage({ id: nanoid(), type: 'bot', content: 'Failed to load questions.' }));
+            dispatch(addMessage({
+                id: nanoid(),
+                type: 'bot',
+                content: 'Failed to load questions.'
+            }));
         }
     };
 
